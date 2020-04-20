@@ -1,0 +1,334 @@
+class person:
+    def __init__(self,a,n,h):
+        self.name = n
+        self.age = a
+        self.health = h
+        self.inventory = [" Health Potion "]
+
+    def getage(self):
+        return self.age
+
+    def getname(self):
+        return self.name
+
+    def increaseage(self):
+        self.age = self.age + 1
+
+    def decreaseage(self):
+        self.age = self.age - 1
+        return self.age
+
+    def damaged(self):
+        self.health = self.health - 20
+        return self.health
+
+    def crumble(self):
+        self.health = self.health - 50
+        return self.health
+
+    def additem(self):
+        self.inventory.append("Mystery Object")
+        return self.inventory
+
+    def printinventory(self):
+        return self.inventory
+
+    def attacked(self,m):
+        self.health = self.health - m.attack
+        return self.health
+
+    def heal(self):
+        self.health = self.health + 10
+        return self.health
+
+
+class weapon:
+    def __init__(self,d,s):
+        self.durability = d
+        self.strength = s
+
+    def increasestrength(self):
+        self.strength = self.strength + 1
+        return self.strength
+
+    def increasestrength10(self):
+        self.strength = self.strength + 10
+        return self.strength
+
+    def getstrength(self):
+        return self.strength
+
+    def determination(self):
+        self.strength = self.strength + 999999999999999999999999999999999900
+        return self.strength
+
+class monster:
+    def __init__(self,hp,at):
+        self.hitpoints = hp
+        self.attack = at
+
+    def getattacked(self,w):
+        self.hitpoints = self.hitpoints - w.strength
+        return self.hitpoints
+
+    def rage(self):
+        self.attack = self.attack + 20
+        return self.attack
+
+    def armageddon(self,p):
+        self.attack = p.health - 1
+        return self.attack
+
+
+
+
+
+#white color: \033[1;37;40m
+# yellow color: \033[1;33;40m
+# bright cyan: \033[1;36;40m
+def room1bottle(p,w):
+    print("\033[1;37;40m As weird as this place might be, you feel that this vial needed to be consumed anyway")
+    print("\033[1;33;40m your age is now",(p.decreaseage()))
+    print("your weapon strength is now", (w.increasestrength()))
+
+def room1nobottle(p,w):
+    print("\033[1;37;40m Better safe than sorry!")
+    print("\033[1;33;40m your age is still",(p.getage()))
+    print("your weapon strength is still", (w.getstrength()))
+
+def room1sword(w):
+    print("\033[1;37;40m Your insticts tell you what to do and you slowly walk over and take the sword")
+    print("\033[1;33;40m your weapon strength is now ",(w.increasestrength10()))
+
+def room1nosword(w):
+    print("\033[1;37;40m Seriously, are you that scared of a sword?")
+    print("\033[1;33;40m your weapon strength is still", (w.getstrength()))
+
+def hallfightdamage(p):
+    print("\033[1;33;40m Your hp has decreased to",(p.damaged()))
+
+def death(p):
+    print("\033[1;33;40m You have died!, Your health is now",(p.crumble()))
+
+def showinventory(p):
+    print ("Your item inventory is",(p.additem()))
+
+def heal(p):
+    print ("You gained 10 health!")
+    print ("Your health is now",(p.heal()))
+
+
+
+def humandamage(p,m):
+    print ("You have been attacked!, your health is:",(p.attacked(m)))
+
+def monsterdamage(m,w):
+    print ("The monster gets hit by your attack!","It deals",w.strength,"damage!")
+    print ("The monster's HP is now",(m.getattacked(w)))
+
+def monstercrit(p,m):
+    print ("|| A CRITICAL hit! || The monster's damage output is now:", (m.rage()))
+    print ("Your HP is now",(p.attacked(m)))
+
+def monstermegacrit(p,m):
+    print("\033[1;36;40m || SUPER CRITICAL HIT! || The beast's damage output is:", (m.armageddon(p)))
+    print ("Your HP is now",(p.attacked(m)))
+
+def humanmegacrit(m,w,p):
+    print ("\033[1;31;40m ||| ULTRA CRITICAL HIT ||| Your damage output is:", (w.determination()))
+    print ("\033[1;37;40m The beast, now terrified of you, slowly starts to evaporate into the stagnant air")
+    print ("Exausted and surprised at how much you put into that attack, you have no choice but to pass out.")
+    print (".")
+    print (".")
+    print (".")
+    print (".")
+    print (".")
+    print ("Suddely, you find yourself tucked under the covers of your bed, with the warm sunlight from the outside strewn across your face.")
+    print ("It was all a dream!!")
+    print ("You look around, realizing everything is the way it used to be, except for something.")
+    print ("An old sword lays in the back corner of your room, with the name", p.name, "engraved on it")
+    responseE = ""
+    while(responseE != "yes" and responseE != "no"):
+        responseE = input("CONGRATULATIONS! You Have Beaten The Game! }{ START OVER? || type yes or no:  ")
+        if(responseE == "yes"):
+            main()
+        if(responseE == "no"):
+            print("\033[1;37;40m Alright, see ya!")
+
+
+
+print("Type ""main() to start")
+
+def main():
+    w = weapon(1,1)
+    p = person(7,"",50)
+    m = monster(10,20)
+    p.name = ""
+    p.name = input("What is your name?:")
+    p.age = int()
+    p.age = int(input("What is your age?:"))
+    print("\033[1;37;40m You wake up from a deep slumber. You are seated on a chair, with a seemingly never-ending table stretched out in front of you.")
+    print(" Infront of you is a small vial... drink it? ")
+    response = ""
+    while(response != "yes" and response != "no"):
+        response = input("type yes or no:  ")
+        if(response == "yes"):
+            room1bottle(p,w)
+        if(response == "no"):
+            room1nobottle(p,w)
+    print ("\033[1;37;40m You then look back, and see a sword lying on the back corner of the room")
+    print ("\033[1;37;40m Something in you wants to take it...Will you?")
+    response2 = ""
+    while(response2 != "yes" and response2 != "no"):
+        response2 = input("type yes or no:  ")
+        if(response2 == "yes"):
+            room1sword(w)
+        if(response2 == "no"):
+            room1nosword(w)
+    print("\033[1;37;40m Suddely you see a weird figure in a hallway, slowly swaying in the distance")
+    print("\033[1;37;40m You feel a sudden urge to fight it. Will you?")
+    response3 = ""
+    while(response3 != "yes" and response3 != "no"):
+        response3 = input("type yes or no:  ")
+        if(response3 == "yes"):
+            print ("You approach the monster quietly, but somehow it senses your footsteps, and lashes at you with its black talons!")
+            humandamage(p,m)
+            response5 = ""
+            while(response5 != "yes" and response5 != "no"):
+                response5 = input("Will you attack or heal? (type yes, no, or heal):  ")
+                if(response5 == "yes"):
+                    monsterdamage(m,w)
+                    if (m.hitpoints <= 0):
+                        print("You killed the monster!")
+                        print("Exausted, you desparately look for a way out of this place.")
+                        print("Suddely out of the corner of your eye, you see a glimmer of white light!")
+                        print("This could be your only hope of getting out! Will you approach it?")
+                        response7 = ""
+                        while(response7 != "yes" and response7 != "no"):
+                            response7 = input("type yes or no:  ")
+                            if(response7 == "yes"):
+                                print("You cautiously approach the glimmer of light, only to realize that it was just the reflection of another monster's eye!")
+                                print("The monster isn't so quiet this time. It roars and shakes the ground as you stand there with fear in your eyes.")
+                                print("Traumatized, you are unable to move, while the monster charges its ulta attack...")
+                                print("You become ready to accept your death, as the monster unleashes it's finishing blow.")
+                                monstermegacrit(p,m)
+                                print("\033[1;37;40m.")
+                                print(".")
+                                print(".")
+                                print("Your not dead...yet.")
+                                print("There is still a chance")
+                                response8 = ""
+                                while(response8 != "yes" and response != "no"):
+                                    response8 = input("Will you give up?:")
+                                    if(response8 == "yes"):
+                                        print("You stand there, waiting for the monster to eat you up.")
+                                        print(".")
+                                        print(".")
+                                        print(".")
+                                        print(".")
+                                        print(".")
+                                        print("Surprisingly, it did!")
+                                        print ("You have died!")
+                                        response6 = ""
+                                        while(response6 != "yes" and response6 != "no"):
+                                            response6 = input("START OVER? || type yes or no:  ")
+                                            if(response6 == "yes"):
+                                                main()
+                                            if(response6 == "no"):
+                                                print("\033[1;37;40m Alright, see ya!")
+                                    if(response8 == "no"):
+                                        print("Your instincts scream at you, not to give up")
+                                        print("You listen.")
+                                        print("Suddely, you feel overcome by some sort of strength, something you've never felt before!")
+                                        print("The fear that you used to feel, is now gone, replaced by your will and determination to win.")
+                                        print("This power surges through your veins, your sword, and your mind!")
+                                        response9 =""
+                                        while(response9 != "yes" and response9 != "no"):
+                                            response9 = input("Will you attack? (type yes or no:)  ")
+                                            if(response9 == "yes"):
+                                                humanmegacrit(m,w,p)
+                                            if(response9 == "no"):
+                                                print("As you stand there dumbfounded, the monster eats you up.")
+                                                print("ur dead.")
+                                                response0 = ""
+                                                while(response0 != "yes" and response0 != "no"):
+                                                    response0 = input("START OVER? || type yes or no:  ")
+                                                    if(response0 == "yes"):
+                                                        main()
+                                                    if(response0 == "no"):
+                                                        print("\033[1;37;40m Alright, see ya!")
+                            if(response7 == "no"):
+                                print("As you stand there, the monster who you though you killed, suddely comes back to life!")
+                                print("This time, it doesn't waste any time, and back-stabs you with its scythe!")
+                                print("ur dead.")
+                                response6 = ""
+                                while(response6 != "yes" and response6 != "no"):
+                                    response6 = input("START OVER? || type yes or no:  ")
+                                    if(response6 == "yes"):
+                                        main()
+                                    if(response6 == "no"):
+                                        print("\033[1;37;40m Alright, see ya!")
+                    if (m.hitpoints >= 0):
+                        print("The Monster is ENRAGED! it uses Dark Slash!")
+                        monstercrit(p,m)
+                        if (p.health <= 0):
+                            print ("You have died!")
+                            response6 = ""
+                            while(response6 != "yes" and response6 != "no"):
+                                response6 = input("START OVER? || type yes or no:  ")
+                                if(response6 == "yes"):
+                                    main()
+                                if(response6 == "no"):
+                                    print("\033[1;37;40m Alright, see ya!")
+                if(response5 == "no"):
+                    print("The Monster is ENRAGED! it uses Dark Slash!")
+                    monstercrit(p,m)
+                    if (p.health <= 0):
+                            print ("You have died!")
+                            response6 = ""
+                            while(response6 != "yes" and response6 != "no"):
+                                response6 = input("START OVER? || type yes or no:  ")
+                                if(response6 == "yes"):
+                                    main()
+                                if(response6 == "no"):
+                                    print("\033[1;37;40m Alright, see ya!")
+                if(response5 == "heal"):
+                    showinventory(p)
+                    response = ""
+                    while(response != "yes" and response != "no"):
+                        response = input("Choose what you want:  ")
+                        if(response == "Health Potion"):
+                            heal(p)
+                            print("The Monster is ENRAGED! it uses Dark Slash!")
+                            monstercrit(p,m)
+                            if (p.health <= 0):
+                                print ("You have died!")
+                                response6 = ""
+                                while(response6 != "yes" and response6 != "no"):
+                                    response6 = input("START OVER? || type yes or no:  ")
+                                    if(response6 == "yes"):
+                                        main()
+                                    if(response6 == "no"):
+                                        print("\033[1;37;40m Alright, see ya!")
+                        if(response == "Mystery Object"):
+                            print("Unfortunately, the object was actually a lethal poison")
+                            print ("You have died!")
+                            response6 = ""
+                            while(response6 != "yes" and response6 != "no"):
+                                response6 = input("START OVER? || type yes or no:  ")
+                                if(response6 == "yes"):
+                                    main()
+                                if(response6 == "no"):
+                                    print("\033[1;37;40m Alright, see ya!")
+        if(response3 == "no"):
+            print("Suddenly the ground below you crumbles, and you fall down a never-ending pit as your life flashes infront of your eyes")
+            death(p)
+            response4 = ""
+            while(response4 != "yes" and response4 != "no"):
+                response4 = input("START OVER? || type yes or no:  ")
+                if(response4 == "yes"):
+                    main()
+                if(response4 == "no"):
+                    print("\033[1;37;40m Alright, see ya!")
+
+
